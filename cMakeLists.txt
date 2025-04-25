@@ -1,6 +1,0 @@
-cmake_minimum_required(VERSION 3.10)
-
-# Set the project name
-project(ContourProject)
-
-# add_definitions(-DUSE_DOUBLE_PRECISION)

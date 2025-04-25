@@ -4,10 +4,10 @@
  *
  * Todo:
  *  * add tests with Google Test
- *  * Fix comparisons
- *  * Fix style
+ *  * Fix comparisons								... done
+ *  * Fix style										... done
  *  * Fix google test header include
- *  * write cmake
+ *  * write cmake									... not supported easily
  *  * doxygen or something to create documentation
  */
 
@@ -22,6 +22,7 @@
 
 #include "Point2.h"
 #include <Arc.h>
+#include "../packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7/build/native/include/gtest/gtest.h"
  //#include "../packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7/build/native/include/gtest/gtest.h"
 
 
@@ -186,17 +187,7 @@ static void contourTests()
 }
 
 
-
-//
-//int main(int argc, char** argv) {
-//	::testing::InitGoogleTest(&argc, argv);
-//	return RUN_ALL_TESTS();
-//}/*
-
 int main(int argc, char** argv) {
-	std::ios_base::sync_with_stdio(false);
-	std::cout << std::fixed << std::setprecision(print_precision); // flushing prints will hit performance
-
 
 	printf("Performing tests...\n\n");
 
