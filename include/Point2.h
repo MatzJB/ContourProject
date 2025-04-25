@@ -6,7 +6,6 @@ struct Point2 {/*!< Simple 2-dimensional coordinate using REAL precision. */
 	REAL x;
 	REAL y;
 
-	// Operators
 	Point2 operator+(const Point2& point) const;
 	Point2 operator-( const Point2& point) const;
 	bool operator==( const Point2& point) const;

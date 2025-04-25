@@ -1,4 +1,6 @@
 #pragma once
+#ifndef LINE_H
+#define LINE_H
 
 #include <vector>
 #include <string>
@@ -21,7 +23,7 @@ public:
     
     void print(const std::string& padding) const override;
 
-    std::vector<Point2> getLineStrip(int resolution = 0) const override;
+    std::vector<Point2> getLineStrip() const override;
 };
 
-
+#endif  

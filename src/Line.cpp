@@ -1,11 +1,8 @@
-#ifndef _SEGMENT_H
-#define _SEGMENT_H
-#endif
+//#include <stdexcept>
+//#include <iostream>
 
 #include <Point2.h>
 #include <Segment.h>
-#include <stdexcept>
-#include <Vector2.h>
 #include <Line.h>
 
 Line::Line(Point2 s, Point2 e)
@@ -55,7 +52,6 @@ void Line::print(const std::string& padding) const {
 }
 
 // Inspiration from OpenGL standard https://www.khronos.org/opengl/wiki/Primitive
-std::vector<Point2> Line::getLineStrip(int resolution) const {
+std::vector<Point2> Line::getLineStrip() const {
 	return std::vector{ Point2({ start.x, start.y }), Point2({ end.x,end.y }) };
 }
-

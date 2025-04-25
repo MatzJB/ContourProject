@@ -41,10 +41,10 @@ static void contourTests()
 	Contour contour4; // valid contour
 
 	// "Periodic half circles" - valid contour
-	Arc a1(Point2({ 0, 0 }), 1, 0, PI, true); // note: backwards for 0 to pi
-	Arc a2(Point2({ 2, 0 }), 1, PI, 2 * PI);
-	Arc a3(Point2({ 4, 0 }), 1, 0, PI, true);
-	Arc a4(Point2({ 6, 0 }), 1, PI, 2 * PI);
+	Arc a1(Point2({ 0, 0 }), 1, 0, PI, RES, true); // note: backwards for 0 to pi
+	Arc a2(Point2({ 2, 0 }), 1, PI, 2 * PI, RES);
+	Arc a3(Point2({ 4, 0 }), 1, 0, PI, RES, true);
+	Arc a4(Point2({ 6, 0 }), 1, PI, 2 * PI, RES);
 
 
 	contour1.addItem(a1);
