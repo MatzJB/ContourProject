@@ -36,6 +36,7 @@ Additional segment types can be added easily at compile time.
 The contour is considered valid if all consecutive segments are connected end-to-begin within a small epsilon tolerance.
 Validation is calculated on demand and cached to avoid redundant computations. 
 Contours are validated using the isValid() function to ensure proper segment connectivity. Edge cases and mixed segment types are also tested to verify the robustness and reliability of the contour implementation.
+https://learn.microsoft.com/en-us/visualstudio/test/improve-code-quality?view=vs-2022
 
 ### Utility Functions:
 
