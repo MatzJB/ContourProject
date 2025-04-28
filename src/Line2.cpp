@@ -3,9 +3,12 @@
 #include <Segment.h>
 #include <Line2.h>
 
-Line2::Line2(Point2 s, Point2 e)
-	: start(s), end(e)
+Line2::Line2(Point2 s, Point2 e, bool fw)
 {
+	start = s;
+	end = e;
+	forwards = fw;
+
 	if (fabs(start.x - end.x) < EPS && fabs(start.y - end.y) < EPS) {
 		throw std::invalid_argument("Line2 start and end points are the same");
 	}
@@ -14,6 +17,10 @@ Line2::Line2(Point2 s, Point2 e)
 Point2 Line2::getCoordinate(double t) const
 {
 	Point2 p1;
+	/*
+	 * Please note: According to IEEE 754, precision is not an issue here, if t=0 or 1, we are at start or end.
+	  The "problem" occur when we use fractions, for instance 0.333333... cannot be represented exactly in binary form.
+	 */
 	if ((this)->forwards)
 	{
 		p1.x = start.x + (end.x - start.x) * t;

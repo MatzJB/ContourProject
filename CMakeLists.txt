@@ -49,7 +49,13 @@ FetchContent_MakeAvailable(googletest)
 set(CTEST_CONFIGURATION_TYPE Debug)
 enable_testing()
 
-# Add the test executable
-add_executable(ContourTests tests/test_main.cpp)
-target_link_libraries(ContourTests PRIVATE gtest gtest_main ContourLib)
-add_test(NAME Tests COMMAND ContourTests.exe WORKING_DIRECTORY ${UNIT_TEST_BIN_OUTPUT_DIR})
+
+#target_link_libraries(ContourTests PRIVATE gtest gtest_main ContourLib)
+#add_test(NAME Tests COMMAND ContourTests.exe WORKING_DIRECTORY ${UNIT_TEST_BIN_OUTPUT_DIR})
+
+file(GLOB UNIT_TEST_SOURCES tests/*.cpp)
+
+add_executable(ContourTests ${UNIT_TEST_SOURCES})
+target_link_libraries(ContourTests gtest_main ContourLib)
+
+add_test(NAME unit_tests COMMAND unit_tests)

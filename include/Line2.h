@@ -13,7 +13,7 @@ class Line2 : public Segment { /*!< Line2 is a Segment consisting of two Point2,
     bool forwards = true;
 
 public:
-    Line2(Point2 s, Point2 e);
+    Line2::Line2(Point2 s, Point2 e, bool fw = true);
 
     Point2 getCoordinate(double t) const override;
 

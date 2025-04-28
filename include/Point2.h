@@ -11,9 +11,7 @@ struct Point2 {/*!< Simple 2-dimensional coordinate using double precision. */
 	Point2 operator+(const Point2& point) const;
 	Point2 operator-( const Point2& point) const;
 	bool operator==( const Point2& point) const;
-	[[nodiscard]] bool isTooFarTo(const Point2& point, double threshold) const;
-
+	[[nodiscard]] bool isCloseTo(const Point2& point, double threshold) const;
 	[[nodiscard]] Point2 getCoordinate(double t) const;
-	[[nodiscard]] std::vector<Point2> getLine2Strip() const;
 };
 

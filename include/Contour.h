@@ -16,16 +16,13 @@ using ContourElement = std::variant<Line2, Arc>;
  * Just add your class that "extends Segment" and implement the methods and overrides
  * and you should be good to go.
  */
- // TODO: add a destructor to contour
 
 class Contour {  /*!< A Contour is either a Line2 or an Arc. The class has several public methods for comparison, moving copying and debugging (svg) */
 public:
 	Contour() = default;
 	Contour(const Contour& other);
 	Contour(Contour&& other) noexcept;
-
 	Contour& operator=(const Contour& other);
-
 	Contour& operator=(Contour&& other) noexcept;
 
 	bool operator==(const Contour& other) const;
@@ -33,11 +30,12 @@ public:
 	void addItemToCenter(ContourElement& item);
 	bool isValid() const;
 	std::vector<ContourElement> getElements() const;
+	std::vector<Point2> getLineStrip() const;
+
 	void clear();
 	void clearAtIndex(int index);
-	std::vector<Point2> getLine2Strip() const;
+
 	void exportContourToSVG(const std::string& filename, double scale) const;
-	void exportContourToSVG(const std::string& filename, int resolution = 100, double scale = 10) const;
 	void print(const std::string& padding) const;
 
 private:
@@ -64,7 +62,5 @@ bool vectorsEqualContour(const std::vector<Contour>& a, const std::vector<Contou
 
 // Filter contours based on validity
 void filterValidStateContour(const std::vector<Contour>& contours, std::vector<Contour>& output, bool validState);
-
-
 
 #endif // CONTOUR_H
