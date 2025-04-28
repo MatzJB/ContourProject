@@ -4,9 +4,16 @@
 #include <shared_mutex>
 #include "Arc.h"
 #include "Segment.h"
-#include "Line.h"
-
+#include "Line2.h"
+#include "Point2.h"
+#include "Config.h"
+#include <iostream>
+#include <thread>
+#include <mutex>
 #include <fstream>
+#include <unordered_map>
+
+// TODO: add 2x2 matrix feature with scaling, translation and rotation
 
 Contour::Contour(const Contour& other) {
 	std::shared_lock lock(other._mutex);
@@ -49,7 +56,6 @@ Contour& Contour::operator=(Contour&& other) noexcept {
 }
 
 bool Contour::operator==(const Contour& other) const {
-	// TODO: consideration, we just read the getelements, we return the pointer ok?
 	const auto& elemsA = getElements();
 	const auto& elemsB = other.getElements();
 	if (elemsA.size() != elemsB.size()) return false;
@@ -116,9 +122,9 @@ void Contour::clearAtIndex(int index) {
 	}
 }
 
-// Please note, line strip resolution only makes sense for non-line objects.
+// Please note, Line2 strip resolution only makes sense for non-Line2 objects.
 // TODO: maybe we should add resolution to arc and leave it alone
-std::vector<Point2> Contour::getLineStrip() const {
+std::vector<Point2> Contour::getLine2Strip() const {
 	std::vector<Point2> result;
 	std::shared_lock lock(_mutex);
 	for (const auto& e : _elements) {
@@ -134,19 +140,19 @@ std::vector<Point2> Contour::getLineStrip() const {
 
 /* Function to export the contour to an SVG file.
  * <Resolution> and <scale> are optional parameters.
- * Resolution overrides Arcs. Lines are unaffected by design. */
+ * Resolution overrides Arcs. Line2s are unaffected by design. */
  // TODO: add resolution to arcs
 
-void Contour::exportContourToSVG(const std::string& filename, int resolution, REAL scale) const {
+void Contour::exportContourToSVG(const std::string& filename, double scale) const {
 	std::ofstream file(filename);
 	if (!file.is_open()) {
 		throw std::runtime_error("Failed to open file.");
 	}
 
 	file << "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"600\" viewBox=\"-100 -100 600 600\">\n";
-	file << "<g fill=\"none\" stroke=\"black\" stroke-width=\"2\" stroke-linejoin=\"round\">\n";
+	file << "<g fill=\"none\" stroke=\"black\" stroke-width=\"2\" stroke-Line2join=\"round\">\n";
 
-	const auto elements = getElements();
+	const auto elements = this->getElements();
 	std::string pathData;
 
 	for (const auto& e : elements) {
@@ -171,7 +177,7 @@ void Contour::print(const std::string& padding) const {
 
 	for (const auto& e : Contour::_elements) {
 		std::visit([padding](const auto& segment) {
-			segment.print(padding);  // Assumes both Line and Arc have a Print() method
+			segment.print(padding);
 			}, e);
 	}
 }
@@ -179,7 +185,7 @@ void Contour::print(const std::string& padding) const {
 bool Contour::computeValidity() const {
 	if (this->_elements.size() < 2) return true;
 
-	auto get_point = [](const auto& element, REAL t) {
+	auto get_point = [](const auto& element, double t) {
 		return std::visit([t](const auto& seg) {
 			return seg.getCoordinate(t);
 			}, element);
@@ -198,12 +204,12 @@ bool Contour::computeValidity() const {
 	return true;
 }
 
-// Returns a contour consisting of lines from a vector of Point2s
+// Returns a contour consisting of Line2s from a vector of Point2s
 static Contour contourFromPoints(const std::vector<Point2>& pts)
 {
 	Contour c;
 	for (size_t i = 0; i + 1 < pts.size(); ++i) {
-		Line l({ pts[i], pts[i + 1] });
+		Line2 l({ pts[i], pts[i + 1] });
 		c.addItem(l);
 	}
 
@@ -243,7 +249,6 @@ static bool vectorsEqualContour(const std::vector<Contour>& a, const std::vector
 	return true;
 }
 
-
 // Filter contours based on their validityState.
 void filterValidStateContour(const std::vector<Contour>& contours, std::vector<Contour>& output, bool validState) {
 	for (const auto& c : contours) {
@@ -253,4 +258,3 @@ void filterValidStateContour(const std::vector<Contour>& contours, std::vector<C
 	}
 }
 
-//using ContourElement = std::variant<Line, Arc>;

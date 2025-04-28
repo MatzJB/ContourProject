@@ -3,12 +3,12 @@
 #include "Contour.h"
 #include "Point2.h"
 
-Point2 Arc::getPoint(REAL t) const {
-	REAL angle = Arc::start_angle + (end_angle - start_angle) * t;
+Point2 Arc::getPoint(double t) const {
+	double angle = Arc::start_angle + (end_angle - start_angle) * t;
 	return Point2({ center.x + radius * cos(angle), center.y + radius * sin(angle) });
 }
 
-Arc::Arc(const Point2& c, REAL r, REAL start, REAL end, unsigned res, bool fw)
+Arc::Arc(const Point2& c, double r, double start, double end, unsigned res, bool fw)
 {
 	if (resolution < 2)
 	{
@@ -33,7 +33,7 @@ Arc::Arc(const Point2& c, REAL r, REAL start, REAL end, unsigned res, bool fw)
 }
 
 // Gets coordinate on circle arc, t<-[0,1]
-Point2 Arc::getCoordinate(REAL t) const
+Point2 Arc::getCoordinate(double t) const
 {
 	if (t < 0 || t>1) {
 		throw std::invalid_argument("argument is out of bounds");
@@ -72,8 +72,8 @@ void Arc::print(const std::string& padding) const {
 // maybe not use resolution, maybe put the resolution as part of the arc?
 std::vector<Point2> Arc::getLineStrip()  const {
 	std::vector<Point2> points;
-	REAL angle;
-	REAL step = std::fabs(end_angle - start_angle) / this->resolution;
+	double angle;
+	double step = std::fabs(end_angle - start_angle) / this->resolution;
 
 	for (unsigned int i = 0; i <= this->resolution; ++i) {
 
@@ -85,8 +85,8 @@ std::vector<Point2> Arc::getLineStrip()  const {
 		{
 			angle = end_angle - i * step;
 		}
-		REAL x = center.x + radius * std::cos(angle);
-		REAL y = center.y + radius * std::sin(angle);
+		double x = center.x + radius * std::cos(angle);
+		double y = center.y + radius * std::sin(angle);
 		points.emplace_back(Point2({ x, y }));
 	}
 	return points;

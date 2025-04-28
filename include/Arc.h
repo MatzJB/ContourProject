@@ -12,19 +12,19 @@ class Arc : public Segment { /*!< Arc is a Segment consisting of a center Point2
 	You can flip the direction by setting forwards */
 public:
     Point2 center;
-    REAL radius;
-    REAL start_angle;
-    REAL end_angle;
+    double radius;
+    double start_angle;
+    double end_angle;
     bool forwards = true;
-    unsigned int resolution = 20;
+    unsigned int resolution;
 
-    Arc(const Point2& c, REAL r, REAL start, REAL end, unsigned int resolution=20, bool fw = true);
+    Arc(const Point2& c, double r, double start, double end, unsigned int resolution=20, bool fw = true);
 
-    Point2 getCoordinate(REAL t) const override;
+    Point2 getCoordinate(double t) const override;
     bool operator==(const Segment& other) const override;
     void print(const std::string& padding) const override;
     std::vector<Point2> getLineStrip() const override;
 
 private:
-    Point2 getPoint(REAL t) const;
+    Point2 getPoint(double t) const;
 };

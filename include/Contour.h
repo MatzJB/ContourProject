@@ -8,17 +8,17 @@
 #include <shared_mutex>
 #include <stdexcept>
 
-#include "Line.h"
+#include "Line2.h"
 #include "Arc.h"
 
-using ContourElement = std::variant<Line, Arc>;
+using ContourElement = std::variant<Line2, Arc>;
 /* For easy extension of the library, we use a variant, introduced in c++17.
  * Just add your class that "extends Segment" and implement the methods and overrides
  * and you should be good to go.
  */
  // TODO: add a destructor to contour
 
-class Contour {  /*!< A Contour is either a Line or an Arc. The class has several public methods for comparison, moving copying and debugging (svg) */
+class Contour {  /*!< A Contour is either a Line2 or an Arc. The class has several public methods for comparison, moving copying and debugging (svg) */
 public:
 	Contour() = default;
 	Contour(const Contour& other);
@@ -35,8 +35,9 @@ public:
 	std::vector<ContourElement> getElements() const;
 	void clear();
 	void clearAtIndex(int index);
-	std::vector<Point2> getLineStrip() const;
-	void exportContourToSVG(const std::string& filename, int resolution = 100, REAL scale = 10) const;
+	std::vector<Point2> getLine2Strip() const;
+	void exportContourToSVG(const std::string& filename, double scale) const;
+	void exportContourToSVG(const std::string& filename, int resolution = 100, double scale = 10) const;
 	void print(const std::string& padding) const;
 
 private:
@@ -52,7 +53,7 @@ private:
 
 void printPoints(const std::vector<Point2>& v);
 
-// Create a contour consisting only of lines from a list of points
+// Create a contour consisting only of Line2s from a list of points
 Contour contourFromPoints(const std::vector<Point2>& pts);
 
 // Brute force uniqueness check
@@ -63,5 +64,7 @@ bool vectorsEqualContour(const std::vector<Contour>& a, const std::vector<Contou
 
 // Filter contours based on validity
 void filterValidStateContour(const std::vector<Contour>& contours, std::vector<Contour>& output, bool validState);
+
+
 
 #endif // CONTOUR_H

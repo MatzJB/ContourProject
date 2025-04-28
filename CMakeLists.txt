@@ -1,5 +1,7 @@
+#set(CMAKE_FIND_DEBUG_MODE 1)
+
 # Set the minimum CMake version required
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.16)
 
 # Set the project name and version
 project(ContourProject VERSION 1.0)
@@ -8,48 +10,46 @@ project(ContourProject VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+if (CMAKE_CONFIGURATION_TYPES)
+    set(CTEST_CONFIGURATION_TYPE "Debug")
+endif()
+
 # Add include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-# Collect all source files from src/
-file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+# Collect source files EXCLUDING main.cpp
+file(GLOB_RECURSE LIB_SOURCES
+    ${CMAKE_SOURCE_DIR}/src/*.cpp
+)
 
-# Create a library for shared code
-add_library(ContourLib ${SOURCES})
+# Remove src/main.cpp from LIB_SOURCES
+list(REMOVE_ITEM LIB_SOURCES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 
-# Add the main executable target
+# Create the library
+add_library(ContourLib ${LIB_SOURCES})
+
+# Add the main executable (the application)
 add_executable(ContourProjectMain src/main.cpp)
-target_link_libraries(ContourProjectMain ContourLib)
+target_link_libraries(ContourProjectMain PRIVATE ContourLib)
+# target_link_libraries(ContourProjectMain PRIVATE gtest gtest_main)
 
-# Optionally, enable debugging symbols
-set(Python_EXECUTABLE "path/to/python")
+# Set build type
 set(CMAKE_BUILD_TYPE Debug)
 
 # Add Google Test using FetchContent
 include(FetchContent)
 FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        6910c9d  # 1.16.0
 )
-FetchContent_MakeAvailable(googletest)
 
-# Enable testing
+set(BUILD_GMOCK OFF CACHE BOOL "" FORCE) # Disable GMock
+FetchContent_MakeAvailable(googletest)
+set(CTEST_CONFIGURATION_TYPE Debug)
 enable_testing()
 
 # Add the test executable
 add_executable(ContourTests tests/test_main.cpp)
-target_link_libraries(ContourTests gtest gtest_main ContourLib)
-
-# Use the paths provided by FetchContent
-include_directories(${googletest_SOURCE_DIR}/googletest/include)
-include_directories(${googletest_SOURCE_DIR}/googlemock/include)
-
-# Remove find_package(GTest REQUIRED) as it is not needed
-# Remove the message line for GTEST_INCLUDE_DIRS
-
-target_link_libraries(ContourTests gtest gtest_main ContourLib)
-
-
-target_link_libraries(ContourTests gtest gtest_main ContourLib)
-
-add_test(THREADTEST ContourTests COMMAND ContourTests)
+target_link_libraries(ContourTests PRIVATE gtest gtest_main ContourLib)
+add_test(NAME Tests COMMAND ContourTests.exe WORKING_DIRECTORY ${UNIT_TEST_BIN_OUTPUT_DIR})
