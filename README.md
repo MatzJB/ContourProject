@@ -1,32 +1,26 @@
 # Contour Project
 
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/69d5e11d-e8b0-4f0a-8dfb-095e74a7e70b" alt="shapes" width="400"/>
+</p>
+
 Author: Matz JB
 
 ## Overview
-This project implements a 2D Contour class that can store and manipulate a sequence of connected segments. 
+
+This project implements a 2D Contour class that can store and manipulate a sequence of connected segments.
 
 It is written in C++17 using Visual Studio 2022. 
 
 ## Build Instructions
-Run build.bat, it will call cmake and create the build directory along with ContourProjectMain, ContourLib and ContourTests. ContourLib is generated because we use it in the other projects.
+Run build.bat, it will call cmake and create the build directory along with *ContourProjectMain*, *ContourLib* and *ContourTests*. *ContourLib* is generated because we use it in the other projects.
 Gtest is used and downloaded when building with cmake.
 
 ## What contours?
-A contour consists of a vector of items where items can be Lines or Arcs. Everything is in 2D. The project is written in a way that future extension for additional segment types is easily added. The Contour class is designed to support flexible construction, iteration, and validation of contours, while maintaining high performance through caching (**Contour::isValid**) and avoiding unnecessary calculations (we do not calculate **sqrt** for distance for instance). Additional performance can be achieved using vectorization, which is not explored here.
+A Contour consists of a vector of items where items can be **Lines** or **Arcs**. Everything is in 2D. The project is written in a way that future extension for additional segment types is easily added. The Contour class is designed to support flexible construction and validation, while maintaining high performance through caching (**Contour::isValid**) and avoiding unnecessary calculations (we do not calculate **sqrt** for distance for instance). Additional performance can be achieved using vectorization, which is not explored at this time.
 
-## ✨ Features
-
-The Contour class provides a robust and extensible framework for working with connected 2D geometric segments. Its design supports both current functionality and future extensibility with performance and usability in mind.
-
-#### Config header
-Contains macros for constants and things that affect the whole project, for instance REAL is a macro used to override the type of all the coordinates in the project.
-
-#### Contour class:
-
-Stores a sequence of 2D segments (**Line**, **Arc**, etc.).
-Allows adding, inserting, and removing segments.
-Supports copying and moving operations.
-Provides read and modify access to individual segments via iteration.
+Config.h contains macros for constants and things that affect the whole project, for instance REAL is a macro used to override the type of all the coordinates in the project.
 
 ### 🔬 Validation:
 
