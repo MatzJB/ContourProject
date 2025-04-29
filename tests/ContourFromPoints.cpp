@@ -39,7 +39,7 @@ TEST(ContourTests, ContourFromPoints) {
     }
 
     // Test with invalid input (less than 2 points)
-    std::vector<Point2> invalidPoints = { Point2{0, 0} };
-    EXPECT_THROW(contourFromPoints(invalidPoints), std::invalid_argument)
+    std::vector<Point2> invalid_points = { Point2{0, 0} };
+    EXPECT_THROW(contourFromPoints(invalid_points), std::invalid_argument)
         << "The function should throw an exception when fewer than two points are provided.";
 }

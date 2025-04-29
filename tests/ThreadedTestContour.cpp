@@ -49,19 +49,19 @@ TEST(ContourThreadedValidationTest, FilterValidAndInvalidContoursCorrectly)
     const int valid_expected = 2;
     const int invalid_expected = 2;
 
-    std::vector<Contour> validContours;
-    std::vector<Contour> invalidContours;
+    std::vector<Contour> valid_contours;
+    std::vector<Contour> invalid_contours;
 
     // Launch threads
-    std::thread thread_valid(filterValidStateContour, std::cref(contours), std::ref(validContours), true);
-    std::thread thread_invalid(filterValidStateContour, std::cref(contours), std::ref(invalidContours), false);
+    std::thread thread_valid(filterValidStateContour, std::cref(contours), std::ref(valid_contours), true);
+    std::thread thread_invalid(filterValidStateContour, std::cref(contours), std::ref(invalid_contours), false);
 
     thread_valid.join();
     thread_invalid.join();
 
     // Validation
     int valid_result = 0;
-    for (const auto& c : validContours) {
+    for (const auto& c : valid_contours) {
         if (c.isValid()) {
             valid_result++;
         }
@@ -69,7 +69,7 @@ TEST(ContourThreadedValidationTest, FilterValidAndInvalidContoursCorrectly)
     EXPECT_EQ(valid_result, valid_expected) << "Valid contours were not filtered correctly.";
 
     int invalid_result = 0;
-    for (const auto& c : invalidContours) {
+    for (const auto& c : invalid_contours) {
         if (!c.isValid()) {
             invalid_result++;
         }
@@ -77,8 +77,8 @@ TEST(ContourThreadedValidationTest, FilterValidAndInvalidContoursCorrectly)
     EXPECT_EQ(invalid_result, invalid_expected) << "Invalid contours were not filtered correctly.";
 
     // Check uniqueness
-    std::vector<Contour> joined = validContours;
-    joined.insert(joined.end(), invalidContours.begin(), invalidContours.end());
+    std::vector<Contour> joined = valid_contours;
+    joined.insert(joined.end(), invalid_contours.begin(), invalid_contours.end());
 
     EXPECT_TRUE(vectorContoursUniqueness(joined)) << "Contours are not unique after joining.";
 }

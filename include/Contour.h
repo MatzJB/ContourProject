@@ -31,7 +31,8 @@ public:
 
 	bool operator==(const Contour& other) const;
 	void addItem(ContourElement item);
-	void addItemToCenter(ContourElement& item);
+	void addItemAt(ContourElement&& item, unsigned int index);
+	void addItemToCenter(const ContourElement& item);
 	bool isValid() const;
 	std::vector<ContourElement> getElements() const;
 	std::vector<Point2> getLineStrip() const;
@@ -61,8 +62,6 @@ Contour contourFromPoints(const std::vector<Point2>& pts);
 // Brute force uniqueness check
 bool vectorContoursUniqueness(const std::vector<Contour>& contours);
 
-// Check if two contour vectors contain the same elements, obsolete
-bool vectorsEqualContour(const std::vector<Contour>& a, const std::vector<Contour>& b);
 
 // Filter contours based on validity
 void filterValidStateContour(const std::vector<Contour>& contours, std::vector<Contour>& output, bool validState);

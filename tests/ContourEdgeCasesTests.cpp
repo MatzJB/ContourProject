@@ -101,7 +101,6 @@ TEST(ContourEdgeCases, ArcWithZeroResolution) {
     ) << "Adding an Arc with zero resolution should throw an invalid_argument exception.";
 }
 
-// TODO: Check this again
 TEST(ContourEdgeCases, DuplicateElements) {
     Contour contour;
 
@@ -110,7 +109,7 @@ TEST(ContourEdgeCases, DuplicateElements) {
     contour.addItem(Line2);
     contour.addItem(Line2);
 
-    // The contour should still be valid
+    // The contour should be invalid
     EXPECT_FALSE(contour.isValid());
     
     // The number of elements should be two
