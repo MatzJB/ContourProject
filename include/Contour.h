@@ -5,12 +5,9 @@
 #include <vector>
 #include <variant>
 #include <string>
-#include <fstream>
-#include <iostream>
 #include <shared_mutex>
 #include <stdexcept>
 
-#include "Segment.h"
 #include "Line.h"
 #include "Arc.h"
 
@@ -19,7 +16,7 @@ using ContourElement = std::variant<Line, Arc>;
  * Just add your class that "extends Segment" and implement the methods and overrides
  * and you should be good to go.
  */
-// TODO: add a destructor to contour
+ // TODO: add a destructor to contour
 
 class Contour {  /*!< A Contour is either a Line or an Arc. The class has several public methods for comparison, moving copying and debugging (svg) */
 public:
@@ -34,18 +31,12 @@ public:
 	bool operator==(const Contour& other) const;
 	void addItem(ContourElement item);
 	void addItemToCenter(ContourElement& item);
-
 	bool isValid() const;
 	std::vector<ContourElement> getElements() const;
-
 	void clear();
 	void clearAtIndex(int index);
-
-	std::vector<Point2> getLineStrip(int resolution) const;
-	// only used by the svg function. It will return a vector of points, this only applies to arcs because a line does not need to be sectioned
-
-	void exportContourToSVG(const std::string& filename, int resolution = 100, double scale = 10) const;
-
+	std::vector<Point2> getLineStrip() const;
+	void exportContourToSVG(const std::string& filename, int resolution = 100, REAL scale = 10) const;
 	void print(const std::string& padding) const;
 
 private:

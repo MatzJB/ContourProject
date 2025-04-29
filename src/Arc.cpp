@@ -1,21 +1,20 @@
-//#pragma once
-//#ifndef _ARC_H
-//#define _ARC_H
-//#endif
-
 #include "Arc.h"
 #include "Segment.h"
-#include "Line.h"
 #include "Contour.h"
 #include "Point2.h"
 
-Point2 Arc::getPoint(double t) const {
+Point2 Arc::getPoint(REAL t) const {
 	REAL angle = Arc::start_angle + (end_angle - start_angle) * t;
 	return Point2({ center.x + radius * cos(angle), center.y + radius * sin(angle) });
 }
 
-Arc::Arc(const Point2& c, REAL r, REAL start, REAL end, bool fw)
+Arc::Arc(const Point2& c, REAL r, REAL start, REAL end, unsigned res, bool fw)
 {
+	if (resolution < 2)
+	{
+		throw std::invalid_argument("resolution must be greater than 1");
+	}
+
 	if (r <= 0) {
 		throw std::invalid_argument("radius must be positive");
 	}
@@ -30,6 +29,7 @@ Arc::Arc(const Point2& c, REAL r, REAL start, REAL end, bool fw)
 	start_angle = start;
 	end_angle = end;
 	forwards = fw;
+	resolution = res;
 }
 
 // Gets coordinate on circle arc, t<-[0,1]
@@ -54,7 +54,7 @@ bool Arc::operator==(const Segment& other) const {
 	if (!arc) return false;
 	return !this->center.isTooFarTo(arc->center, EPS) &&
 		fabs(this->radius - arc->radius) < EPS &&
-		fabs(this->start_angle -arc->start_angle) < EPS &&
+		fabs(this->start_angle - arc->start_angle) < EPS &&
 		fabs(this->end_angle - arc->end_angle) < EPS &&
 		this->forwards == arc->forwards;
 }
@@ -70,13 +70,12 @@ void Arc::print(const std::string& padding) const {
 
 // Return a strip of 2D coordinates, so no repeated coordinates.
 // maybe not use resolution, maybe put the resolution as part of the arc?
-std::vector<Point2> Arc::getLineStrip(int resolution)  const {
+std::vector<Point2> Arc::getLineStrip()  const {
 	std::vector<Point2> points;
-	if (resolution < 1) return points;
-	double angle;
-	double step = std::abs(end_angle - start_angle) / resolution;
+	REAL angle;
+	REAL step = std::fabs(end_angle - start_angle) / this->resolution;
 
-	for (int i = 0; i <= resolution; ++i) {
+	for (unsigned int i = 0; i <= this->resolution; ++i) {
 
 		if (forwards)
 		{
@@ -86,8 +85,8 @@ std::vector<Point2> Arc::getLineStrip(int resolution)  const {
 		{
 			angle = end_angle - i * step;
 		}
-		double x = center.x + radius * std::cos(angle);
-		double y = center.y + radius * std::sin(angle);
+		REAL x = center.x + radius * std::cos(angle);
+		REAL y = center.y + radius * std::sin(angle);
 		points.emplace_back(Point2({ x, y }));
 	}
 	return points;

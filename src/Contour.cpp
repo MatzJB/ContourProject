@@ -6,6 +6,8 @@
 #include "Segment.h"
 #include "Line.h"
 
+#include <fstream>
+
 Contour::Contour(const Contour& other) {
 	std::shared_lock lock(other._mutex);
 	_elements = other._elements;
@@ -116,12 +118,12 @@ void Contour::clearAtIndex(int index) {
 
 // Please note, line strip resolution only makes sense for non-line objects.
 // TODO: maybe we should add resolution to arc and leave it alone
-std::vector<Point2> Contour::getLineStrip(int resolution) const {
+std::vector<Point2> Contour::getLineStrip() const {
 	std::vector<Point2> result;
 	std::shared_lock lock(_mutex);
 	for (const auto& e : _elements) {
 		std::visit([&](const auto& element) {
-			auto poly = element.getLineStrip(resolution);
+			auto poly = element.getLineStrip();
 			result.insert(result.end(), poly.begin(), poly.end());
 			}, e);
 	}
@@ -135,7 +137,7 @@ std::vector<Point2> Contour::getLineStrip(int resolution) const {
  * Resolution overrides Arcs. Lines are unaffected by design. */
  // TODO: add resolution to arcs
 
-void Contour::exportContourToSVG(const std::string& filename, int resolution, double scale) const {
+void Contour::exportContourToSVG(const std::string& filename, int resolution, REAL scale) const {
 	std::ofstream file(filename);
 	if (!file.is_open()) {
 		throw std::runtime_error("Failed to open file.");
@@ -150,7 +152,7 @@ void Contour::exportContourToSVG(const std::string& filename, int resolution, do
 	for (const auto& e : elements) {
 		std::vector<Point2> pts;
 		std::visit([&](const auto& element) {
-			pts = element.getLineStrip(resolution);
+			pts = element.getLineStrip();
 			}, e);
 
 		for (size_t j = 0; j < pts.size(); ++j) {
@@ -177,7 +179,7 @@ void Contour::print(const std::string& padding) const {
 bool Contour::computeValidity() const {
 	if (this->_elements.size() < 2) return true;
 
-	auto get_point = [](const auto& element, double t) {
+	auto get_point = [](const auto& element, REAL t) {
 		return std::visit([t](const auto& seg) {
 			return seg.getCoordinate(t);
 			}, element);

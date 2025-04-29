@@ -30,4 +30,3 @@ bool Point2::isTooFarTo(const Point2& point, REAL threshold) const
 	return (x - point.x) * (x - point.x) +
 		(y - point.y) * (y - point.y) < threshold * threshold;
 }
-
