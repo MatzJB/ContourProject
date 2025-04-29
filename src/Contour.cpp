@@ -1,13 +1,13 @@
-#include "Contour.h"
-#include <shared_mutex>
-#include "Line2.h"
-#include "Point2.h"
-#include "Config.h"
+#include <Config.h>
+
 #include <iostream>
 #include <mutex>
+#include <shared_mutex>
 #include <fstream>
 
+
 // TODO: add 2x2 matrix feature with scaling, translation and rotation
+
 
 Contour::Contour(const Contour& other) {
 	std::shared_lock lock(other._mutex);
@@ -136,7 +136,7 @@ std::vector<Point2> Contour::getLineStrip() const {
  * Resolution overrides Arcs. Line2s are unaffected by design. */
  // TODO: add resolution to arcs
 
-void Contour::exportContourToSVG(const std::string& filename, double scale) const {
+void Contour::exportContourToSVG(const std::string& filename) const {
 	std::ofstream file(filename);
 	if (!file.is_open()) {
 		throw std::runtime_error("Failed to open file.");
@@ -144,7 +144,7 @@ void Contour::exportContourToSVG(const std::string& filename, double scale) cons
 
 	file << "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"600\" viewBox=\"-100 -100 600 600\">\n";
 	file << "<g fill=\"none\" stroke=\"black\" stroke-width=\"2\" stroke-Line2join=\"round\">\n";
-
+	double scale=10;
 	const auto elements = this->getElements();
 	std::string pathData;
 
@@ -162,6 +162,7 @@ void Contour::exportContourToSVG(const std::string& filename, double scale) cons
 	}
 
 	file << "<path d=\"" << pathData << "\" />\n</g>\n</svg>\n";
+	file.close();
 }
 
 void Contour::print(const std::string& padding) const {

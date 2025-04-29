@@ -1,9 +1,7 @@
 #pragma once
 #include <vector>
 #include "Point2.h"
-//#include <string>
 
-// TODO: do we need a copy and move constructor for segments?
 // TODO: maybe add matrix for rotation and pivot point rot scaling and rotation
 class Segment {
 	/*!< Segment is a base class for Line2 and Arc. It defines the interface for getting coordinates, printing and comparing segments */

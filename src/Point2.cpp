@@ -1,5 +1,4 @@
 #include "Config.h"
-#include "Point2.h"
 
 /*
  * As this is a toy example and to make things simple, I use a struct because it is
