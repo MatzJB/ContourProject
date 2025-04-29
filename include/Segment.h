@@ -4,12 +4,13 @@
 //#include <string>
 
 // TODO: do we need a copy and move constructor for segments?
+// TODO: maybe add matrix for rotation and pivot point rot scaling and rotation
 class Segment {
-	/*!< Segment is a base class for Line and Arc. It defines the interface for getting coordinates, printing and comparing segments */
+	/*!< Segment is a base class for Line2 and Arc. It defines the interface for getting coordinates, printing and comparing segments */
 public:
 	virtual ~Segment() = default;
-	virtual Point2 getCoordinate(REAL t) const = 0;
+	virtual Point2 getCoordinate(double t) const = 0;
 	virtual void print(const std::string& padding) const = 0;
-	virtual std::vector<Point2> getLineStrip() const = 0;
 	virtual bool operator==(const Segment& other) const = 0;
+	virtual std::vector<Point2> getLineStrip() const = 0;
 };
