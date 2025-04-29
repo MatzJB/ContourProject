@@ -5,8 +5,6 @@ Author: Matz JB
   <img src="https://github.com/user-attachments/assets/69d5e11d-e8b0-4f0a-8dfb-095e74a7e70b" alt="Lorentz attractor plot" width="400"/>
 </p>
 
-Author: Matz JB
-
 ## Overview
 
 This project implements a 2D Contour class that can store and manipulate a sequence of connected segments.
