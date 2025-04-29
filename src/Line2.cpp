@@ -1,7 +1,4 @@
-
-#include <Point2.h>
-#include <Segment.h>
-#include <Line2.h>
+#include <Config.h>
 
 Line2::Line2(Point2 s, Point2 e, bool fw)
 {

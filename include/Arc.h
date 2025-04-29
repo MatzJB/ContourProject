@@ -2,9 +2,8 @@
 #ifndef ARC_H
 #define ARC_H
 
-#include "Segment.h"
-#include "Point2.h"
-#include <vector>
+#include <Config.h>
+#include <Segment.h>
 #include <string>
 
 class Arc : public Segment { /*!< Arc is a Segment consisting of a center Point2, radius and start and end angles.

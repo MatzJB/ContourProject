@@ -1,8 +1,16 @@
+#include <filesystem>
+
 #include "gtest/gtest.h"
 #include "Contour.h"
 #include "Point2.h"
 #include "Line2.h"
 
+#include "gtest/gtest.h"
+#include "Contour.h"
+#include "Point2.h"
+#include "Line2.h"
+#include "Arc.h"
+#include <fstream>
 
 // Test for copy constructor
 TEST(ContourTests, CopyConstructor) {
@@ -145,13 +153,9 @@ TEST(ContourTests, ValidContours) {
     contour.addItem(a3);
     contour.addItem(a4);
 
-
     EXPECT_TRUE(contour.isValid());
 
-
     EXPECT_EQ(contour.getElements().size(), 4);
-    //contour.exportContourToSVG("c:\\temp\\valid_contour.svg", 1.0);
-
 }
 #include "gtest/gtest.h"
 #include "Contour.h"  // Or whatever your contour header is called
@@ -193,3 +197,5 @@ TEST(ContourTests, UniqueContours) {
 
     EXPECT_TRUE(vectorContoursUniqueness(joined));
 }
+
+

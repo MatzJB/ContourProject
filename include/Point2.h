@@ -1,8 +1,6 @@
 #pragma once
-
-#include <vector>
-
-#include "Config.h"
+#ifndef POINT2_H
+#define POINT2_H
 
 struct Point2 {/*!< Simple 2-dimensional coordinate using double precision. */
 	double x;
@@ -14,4 +12,4 @@ struct Point2 {/*!< Simple 2-dimensional coordinate using double precision. */
 	[[nodiscard]] bool isCloseTo(const Point2& point, double threshold) const;
 	[[nodiscard]] Point2 getCoordinate(double t) const;
 };
-
+#endif 

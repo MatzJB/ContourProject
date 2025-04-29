@@ -2,6 +2,10 @@
 #ifndef CONTOUR_H
 #define CONTOUR_H
 
+#include <Config.h>
+
+#include <Arc.h>
+#include <Line2.h>
 #include <vector>
 #include <variant>
 #include <string>
@@ -35,7 +39,7 @@ public:
 	void clear();
 	void clearAtIndex(int index);
 
-	void exportContourToSVG(const std::string& filename, double scale) const;
+	void exportContourToSVG(const std::string& filename) const;
 	void print(const std::string& padding) const;
 
 private:

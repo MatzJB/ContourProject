@@ -1,7 +1,4 @@
-#include "Arc.h"
-#include "Segment.h"
-#include "Contour.h"
-#include "Point2.h"
+#include <Config.h>
 #include <iostream>
 
 Point2 Arc::getPoint(double t) const {
