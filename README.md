@@ -1,8 +1,8 @@
 # Contour Project
-
+Author: Matz JB
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/69d5e11d-e8b0-4f0a-8dfb-095e74a7e70b" alt="shapes" width="400"/>
+  <img src="https://github.com/user-attachments/assets/69d5e11d-e8b0-4f0a-8dfb-095e74a7e70b" alt="Lorentz attractor plot" width="400"/>
 </p>
 
 Author: Matz JB
@@ -11,10 +11,10 @@ Author: Matz JB
 
 This project implements a 2D Contour class that can store and manipulate a sequence of connected segments.
 
-It is written in C++17 using Visual Studio 2022. 
+It is written in C++17 using Visual Studio 2022 and CMake. 
 
 ## Build Instructions
-Run **build.bat**, it will call **cmake** and create the build directory along with **ContourProjectMain**, **ContourLib** and **ContourTests**. **ContourLib** is generated so we can reference it from the other projects. Gtest is used and downloaded when building with cmake.
+Run **build.bat**, it will call **cmake** and create the build directory along with **ContourProjectMain**, **ContourLib** and **ContourTests**. **ContourLib** is generated so we can reference it from the other projects. Open the Visual Studio **ContourProject.sln** file in Build. Gtest is used and downloaded when building with cmake.
 
 ## Definition
 A **Contour** consists of a vector of items where items can be **Lines** or **Arcs**. Everything is in 2D. The project is written in a way that future extension for additional segment types is easily added. The Contour class is designed to support flexible construction and validation, while maintaining high performance through caching (**Contour::isValid**) and avoiding unnecessary calculations (we do not calculate **sqrt** for distance for instance). Additional performance can be achieved using vectorization, which is not explored at this time.
