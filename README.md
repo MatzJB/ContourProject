@@ -16,6 +16,8 @@ It is written in C++17 using Visual Studio 2022 and CMake.
 ## Build Instructions
 Run **build.bat**, it will call **cmake** and create the build directory along with **ContourProjectMain**, **ContourLib** and **ContourTests**. **ContourLib** is generated so we can reference it from the other projects. Open the Visual Studio **ContourProject.sln** file in Build. Gtest is used and downloaded when building with cmake.
 
+NOTE: Running main.cpp in ContourProjectMain will create a local file "test-lorentz.svg";.
+
 ## Definition
 A **Contour** consists of a vector of items where items can be **Lines** or **Arcs**. Everything is in 2D. The project is written in a way that future extension for additional segment types is easily added. The Contour class is designed to support flexible construction and validation, while maintaining high performance through caching (**Contour::isValid**) and avoiding unnecessary calculations (we do not calculate **sqrt** for distance for instance). Additional performance can be achieved using vectorization, which is not explored at this time.
 
