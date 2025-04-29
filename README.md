@@ -1,6 +1,4 @@
 # Contour Project
-Author: Matz JB
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/69d5e11d-e8b0-4f0a-8dfb-095e74a7e70b" alt="Lorentz attractor plot" width="400"/>
 </p>
