@@ -19,7 +19,7 @@ Run **build.bat**, it will call **cmake** and create the build directory along w
 ## Definition
 A **Contour** consists of a vector of items where items can be **Lines** or **Arcs**. Everything is in 2D. The project is written in a way that future extension for additional segment types is easily added. The Contour class is designed to support flexible construction and validation, while maintaining high performance through caching (**Contour::isValid**) and avoiding unnecessary calculations (we do not calculate **sqrt** for distance for instance). Additional performance can be achieved using vectorization, which is not explored at this time.
 
-Config.h contains macros for constants and things that affect the whole project, for instance REAL is a macro used to override the type of all the coordinates in the project.
+Config.h contains macros for constants and things that affect the whole project, for instance EPS and RES. Config includes the headers of the project and it turn their headers read config.h.
 
 ### 🔬 Testing
 
