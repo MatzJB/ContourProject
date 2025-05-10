@@ -1,10 +1,3 @@
-﻿/*
- * ContourProject
- * Author: Matz JB
- * Date: 2025-04-28
- *
- */
-
 #include <iostream>
 #include <string>  
 #include <variant>
@@ -15,9 +8,6 @@
 
 
 int main() {
-
-    // some outputs
-
     // Lorentz attaractor
     const double rho = 28.0;
     const double beta = 8.0 / 3.0;
